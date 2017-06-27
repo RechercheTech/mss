@@ -1,5 +1,12 @@
 -------------------------------------------------------------------
-Sun Jun 25 04:19:04 UTC 2017 - jigish.gohil@myscoolserver.com
+Tue Jun 27 2017 - jigish.gohil@myscoolserver.com
+
+- mssipchange : changes for moodle
+- mssap : do not start if already running
+- msssetup, recovery.sh : changes for restructured offlineweb
+
+-------------------------------------------------------------------
+Sun Jun 25 2017 - jigish.gohil@myscoolserver.com
 
 - Access Point https://github.com/RechercheTech/mss/issues/18
 - Live stick GUI improvements
