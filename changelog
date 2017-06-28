@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed June 28 2017 - jigish.gohil@myscoolserver.com
+
+- add postmsssetup: script called from msssetup, run before recovery
+  /home/mss/postmsssetup is script to automate/customize post installation
+  such as run mssupdate serverip kalite etc.
+
+-------------------------------------------------------------------
 Tue Jun 27 2017 - jigish.gohil@myscoolserver.com
 
 - mssipchange : changes for moodle
