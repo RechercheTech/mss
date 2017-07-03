@@ -1,0 +1,62 @@
+#!/bin/bash
+# Copyright (c) 2016 CyberOrg Info
+# Copyright (c) 2016 Recherche Tech LLP
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 2 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+#
+# Authors:      Jigish Gohil <cyberorg@cyberorg.info>
+#               Alex Savin <alexqwesa@opensuse.org>
+
+. /usr/bin/networkvariables.sh
+sed -i -e s"@nfsroot=.*@nfsroot=$SERVER_IP:/srv/ubuntu-livecd initrd=life-initrd.lz -- splash quiet@g" /var/lib/tftpboot/ltsp/amd64/pxelinux.cfg/default
+ltsp-config dnsmasq --overwrite
+for eth_ in $DHCP_IFACES
+	do
+	((i++))
+	export sub_net="`echo $DHCP_SUBNETS  | cut -f$i -d' ' `"
+	export netmask="`echo $DHCP_NETMASKS | cut -f$i -d' ' `"
+	export range_start="`echo $DHCP_RANGES   | cut -f$((i*2-1)) -d' ' `"
+	export range_end="`echo $DHCP_RANGES     | cut -f$((i*2))   -d' ' `"
+	export tftp_server="`echo $TFTP_SERVERS  | cut -f$i -d' ' `"
+	export gateway="`echo $GATEWAYS | cut -f$i -d' ' `"
+	#======================================
+	# Use first value of $TFTP_SERVERS and $GATEWAYS if other not specified
+	#--------------------------------------
+	[[ -z $tftp_server ]] && tftp_server="`echo $TFTP_SERVERS | cut -f1 -d' ' `"
+	[[ -z $gateway     ]] && gateway="`echo $GATEWAYS | cut -f1 -d' ' `"
+
+	#dhcp-range=$SERVER_IP,proxy
+	#dhcp-range=$range_start,$range_end,1h
+	#/etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+	#dhcp-range=192.168.67.20,192.168.67.250,8h
+	sed -i -e s"@dhcp-range=.*8h@dhcp-range=$range_start,$range_end,8h@g" /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+	#dhcp-range=10.0.0.0,proxy
+	sed -i -e s"@port=0@\#port=0@g" /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+done
+if ps -A -o cmd | grep -E '(/| )dhclient .' | grep -q $DHCP_IFACES; then
+        sed -i -e s"@dhcp-range=.*proxy@dhcp-range=$SERVER_IP,proxy@g" /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+        gatewayip=$(ip route |grep default | cut -d " " -f 3)
+else
+	sed -i -e '/proxy/d' /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+        gatewayip=$gateway
+fi
+echo "dhcp-option=3,$gatewayip" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+echo "dhcp-option=66,$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+touch /etc/dnsmasq.d/network-manager && rm /etc/dnsmasq.d/network-manager
+systemctl restart dnsmasq
+systemctl restart nfs-kernel-server
+sed -i -e s"@http://.*:4242@http://$SERVER_IP:4242@g" /var/www/html/mss/index.html 2>/dev/null || true
+sed -i -e s"@http://.*:8008@http://$SERVER_IP:8008@g" /var/www/html/mss/index.html 2>/dev/null || true
+sed -i -e s"@http://.*:81@http://$SERVER_IP:81@g" /var/www/html/mss/index.html 2>/dev/null || true
+

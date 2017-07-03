@@ -1,0 +1,6 @@
+#!/bin/bash
+serverip=https://recherchetech.github.io/mss/fixes
+wget http://$serverip/mss/fixes/mssipchange
+mv mssipchange /usr/bin/
+chmod +x /usr/bin/mssipchange
+
