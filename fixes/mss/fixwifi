@@ -3,4 +3,5 @@ serverip=recherchetech.github.io
 wget http://$serverip/mss/fixes/mssipchange
 mv mssipchange /usr/bin/
 chmod +x /usr/bin/mssipchange
+echo "`date`: fixwifi applied" >> /var/log/fixlog
 
