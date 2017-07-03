@@ -1,3 +1,4 @@
 #!/bin/bash
 apt remove --purge r8168-dkms
+echo "`date`: fixrtl applied" >> /var/log/fixlog
 

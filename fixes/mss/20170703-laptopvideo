@@ -1,1 +1,2 @@
 sed -i -e 's@video=LVDS-1:d video=eDP-1:d@@g' /var/lib/tftpboot/ltsp/amd64/pxelinux.cfg/default
+echo "`date`: laptopvideo fix applied" >> /var/log/fixlog
