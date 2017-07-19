@@ -1,0 +1,6 @@
+#!/bin/bash
+serverip=recherchetech.github.io
+wget http://$serverip/mss/fixes/grub-bin.tar.xz
+tar xf grub-bin.tar.xz -C / && rm grub-bin.tar.xz
+echo "`date`: grubpc applied" >> /var/log/fixlog
+
