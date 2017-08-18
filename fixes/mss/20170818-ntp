@@ -1,0 +1,8 @@
+#!/bin/bash
+tarball=ntp.tar.xz
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar xf $tarball -C / && rm $tarball
+mssipchange
+echo "`date`: $tarball applied" >> /var/log/fixlog
+
