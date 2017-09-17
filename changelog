@@ -4,6 +4,7 @@ Fri Sep 15 2017 - jigish.gohil@myscoolserver.com
 - Rename Legacy-client to Admin-Desktop, fixes #43
 - Disable folder names localization, fixes #45
 - Add default X_SMART_COLOR_DEPTH=true for Admin-Desktop, fixes #44
+- Add Pylote for on screen annotation
 
 -------------------------------------------------------------------
 Fri Aug 18 2017 - jigish.gohil@myscoolserver.com
