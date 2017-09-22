@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Sep 22 2017 - jigish.gohil@myscoolserver.com
+
+- msssetup now takes 3rd arguement as language 
+
+-------------------------------------------------------------------
 Fri Sep 15 2017 - jigish.gohil@myscoolserver.com
 
 - Rename Legacy-client to Admin-Desktop, fixes #43
