@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#installs or updates lang manual
+
+#supported language check and set env
+wget http://$serverip/lang_map
+. lang_map
+rm lang_map
+
+manual_home=/var/www/html/mss/manual/
+
+#fetch and plant the latest lang doc
+docarchive=mss-doc-$1.zip
+wget http://readthedocs.org/projects/mss-doc-$1/downloads/htmlzip/latest/ -O $docarchive
+unzip -o $docarchive -d $manual_home
+rm $docarchive
+
+#rebuild index.html with lang link
+pdir=`pwd`
+cd /var/www/html/mss/indexer
+./indexer.sh --docl10n $1 $_LANG
+cd $pdir
+
+#cleanup references to online resources
+find /var/www/html/mss/manual -name index.html -exec sed -i '/https:\/\/media.readthedocs.org\/css\/readthedocs-doc-embed.css/d' {} \;
+
+#fetch and plant the customisations such as theme.css
+tarball=doc-changes.tar.xz
+wget http://$serverip/$tarball
+tar xf $tarball -C / && rm $tarball
+cp $manual_home/mss-doc-latest/_static/css/theme.css $manual_home/mss-doc-$1-latest/_static/css/theme.css
+
+echo "`date`: $1 manual uploaded and theme fix applied" >> /var/log/fixlog
+

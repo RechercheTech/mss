@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#updates english manual
+
+manual_home=/var/www/html/mss/manual/
+
+#fetch and plant the latest doc
+docarchive=mss-doc.zip
+wget http://readthedocs.org/projects/mss-doc/downloads/htmlzip/latest/ -O $docarchive
+unzip -o $docarchive -d $manual_home
+rm $docarchive
+
+#cleanup references to online resources
+find /var/www/html/mss/manual -name index.html -exec sed -i '/https:\/\/media.readthedocs.org\/css\/readthedocs-doc-embed.css/d' {} \;
+
+#fetch and plant the customisations such as theme.css
+tarball=doc-changes.tar.xz
+wget http://$serverip/$tarball
+tar xf $tarball -C / && rm $tarball
+
+echo "`date`: English manual updated and theme fix applied" >> /var/log/fixlog
