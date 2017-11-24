@@ -1,0 +1,17 @@
+#!/bin/bash
+[[ -z "$1" ]] && { echo "Language is not specified" ; exit 0; }
+case "$1" in
+
+gu)  echo "Gujarati selected"
+    export _LANG=Gujarati
+    export _LANGL=gujarati
+    ;;
+as)  echo  "Assamese selected"
+    export _LANG=Assamese
+    export _LANGL=assamese
+    ;;
+*) echo "Unknown language"
+    exit
+   ;;
+esac
+
