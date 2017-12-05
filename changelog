@@ -1,6 +1,11 @@
 -------------------------------------------------------------------
 Fri Dec 01 2017 - jigish.gohil@myscoolserver.com
 
+- switch to nginx for web server
+
+-------------------------------------------------------------------
+Fri Dec 01 2017 - jigish.gohil@myscoolserver.com
+
 - add gstudio deps
 
 -------------------------------------------------------------------
