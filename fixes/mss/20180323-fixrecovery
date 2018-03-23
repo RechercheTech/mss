@@ -1,0 +1,7 @@
+#!/bin/bash
+serverip=recherchetech.github.io
+wget http://$serverip/mss/fixes/recovery.sh
+mv recovery.sh /usr/bin/
+chmod +x /usr/bin/recovery.sh
+echo "`date`: fixrecovery applied" >> /var/log/fixlog
+
