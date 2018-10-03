@@ -10,6 +10,10 @@ as)  echo  "Assamese selected"
     export _LANG=Assamese
     export _LANGL=assamese
     ;;
+hi)  echo  "Hindi selected"
+    export _LANG=Hindi
+    export _LANGL=hindi
+    ;;
 *) echo "Unknown language"
     exit
    ;;
