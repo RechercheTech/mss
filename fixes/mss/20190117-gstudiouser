@@ -1,9 +1,21 @@
 #!/bin/bash
 
+systemctl stop gstudio
+systemctl stop nginx
+systemctl stop rabbitmq-server
+systemctl stop postgresql
+
+killall -u docker
+
 usermod -u 499 docker
 groupmod -g 499 docker
 
 find /home/docker -group 1111 -exec chgrp -h docker {} \;
-find /home/docker -user 1111 -exec chown -h docker {} \;
+chown -R -h docker /home/docker; 
+
+systemctl start postgresql
+systemctl start rabbitmq-server
+systemctl start nginx
+systemctl start gstudio
 
 echo "`date`: gstudiouser fix applied" >> /var/log/fixlog
