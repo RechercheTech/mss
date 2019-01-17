@@ -13,9 +13,5 @@ groupmod -g 499 docker
 find /home/docker -group 1111 -exec chgrp -h docker {} \;
 chown -R -h docker /home/docker; 
 
-systemctl start postgresql
-systemctl start rabbitmq-server
-systemctl start nginx
-systemctl start gstudio
-
+echo "Reboot of MSS needed to complete the fix. Ensure all client systems are off before rebooting."
 echo "`date`: gstudiouser fix applied" >> /var/log/fixlog
