@@ -1,0 +1,9 @@
+#!/bin/bash
+
+usermod -u 499 docker
+groupmod -g 499 docker
+
+find /home/docker -group 1111 -exec chgrp -h docker {} \;
+find /home/docker -user 1111 -exec chown -h docker {} \;
+
+echo "`date`: gstudiouser fix applied" >> /var/log/fixlog
