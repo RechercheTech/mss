@@ -1,13 +1,25 @@
 #!/bin/bash
+#From fixes server -
+#
+#mssupdate repo.myscoolserver.com/fixes update_offlinewebinfra
+#
+#From installation server -
+#
+#mssupdate <install server> update_offlinewebinfra
+
 serverip=recherchetech.github.io
 wget http://$serverip/mss/fixes/offlinewebinfra.tar.xz
 wget http://$serverip/mss/fixes/offlinewebinfraskel
 
 #safety net
-tar cvJf /tmp/offliewebinfra.tar.xz -T offlinewebinfraskel
+tar cvJf /tmp/offlinewebinfra.tar.xz -T offlinewebinfraskel
 
-#roll out update
+#roll out update, integrate local doc changes from backup
 tar xf offlinewebinfra.tar.xz -C /
+tar xf /tmp/offlinewebinfra.tar.xz -C / var/www/html/mss/indexer/htmls/90-mss-manual.html
+tar cJf offlinewebinfra.tar.xz -T offlinewebinfraskel
+
+#secure for system restore
 mv offlinewebinfra.tar.xz /recovery/offlinewebarchives/
 
 cd /var/www/html/mss/indexer
