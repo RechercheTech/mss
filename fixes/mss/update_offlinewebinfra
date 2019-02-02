@@ -6,7 +6,7 @@ wget http://$serverip/mss/fixes/offliewebinfraskel
 tar cvJf offliewebinfra.tar.xz -T offliewebinfraskel
 tar xf offliewebinfra.tar.xz -C /
 
-cd /var/www/html/indexer
+cd /var/www/html/mss/indexer
 ./indexer.sh
 
 mssipchange
