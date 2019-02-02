@@ -3,7 +3,10 @@ serverip=recherchetech.github.io
 wget http://$serverip/mss/fixes/offlinewebinfra.tar.xz
 wget http://$serverip/mss/fixes/offlinewebinfraskel
 
-tar cvJf offliewebinfra.tar.xz -T offlinewebinfraskel
+#safety net
+tar cvJf /tmp/offliewebinfra.tar.xz -T offlinewebinfraskel
+
+#roll out update
 tar xf offlinewebinfra.tar.xz -C /
 
 cd /var/www/html/mss/indexer
@@ -12,4 +15,4 @@ cd /var/www/html/mss/indexer
 mssipchange
 
 echo "`date`: offlinewebinfra updated" >> /var/log/fixlog
-
+echo "You need to delete /tmp/offliewebinfra.tar.xz manually if all is OK at http://server/"
