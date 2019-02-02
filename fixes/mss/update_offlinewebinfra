@@ -1,10 +1,10 @@
 #!/bin/bash
-serverip=repo.myscoolserver.com
-wget http://$serverip/fixes/offliewebinfra.tar.xz
-wget http://$serverip/fixes/offliewebinfraskel
+serverip=recherchetech.github.io
+wget http://$serverip/mss/fixes/offlinewebinfra.tar.xz
+wget http://$serverip/mss/fixes/offlinewebinfraskel
 
-tar cvJf offliewebinfra.tar.xz -T offliewebinfraskel
-tar xf offliewebinfra.tar.xz -C /
+tar cvJf offliewebinfra.tar.xz -T offlinewebinfraskel
+tar xf offlinewebinfra.tar.xz -C /
 
 cd /var/www/html/mss/indexer
 ./indexer.sh
