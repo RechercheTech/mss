@@ -8,6 +8,7 @@ tar cvJf /tmp/offliewebinfra.tar.xz -T offlinewebinfraskel
 
 #roll out update
 tar xf offlinewebinfra.tar.xz -C /
+mv offlinewebinfra.tar.xz /recovery/offlinewebarchives/
 
 cd /var/www/html/mss/indexer
 ./indexer.sh
