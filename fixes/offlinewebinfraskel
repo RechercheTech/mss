@@ -1,13 +1,5 @@
 /var/www/html/mss/mss.svg
 /var/www/html/mss/sass/
-/var/www/html/mss/sass/main.scss
-/var/www/html/mss/sass/_footer.scss
-/var/www/html/mss/sass/_/vars.scss
-/var/www/html/mss/sass/_reset.scss
-/var/www/html/mss/sass/_banner.scss
-/var/www/html/mss/sass/_header.scss
-/var/www/html/mss/sass/_projects.scss
-/var/www/html/mss/sass/_base.scss
 /var/www/html/mss/indexer/
 /var/www/html/mss/indexer/indexer.sh
 /var/www/html/mss/indexer/htmls/
