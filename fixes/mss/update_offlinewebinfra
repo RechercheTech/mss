@@ -1,0 +1,15 @@
+#!/bin/bash
+serverip=recherchetech.github.io
+wget http://$serverip/mss/fixes/offliewebinfra.tar.xz
+wget http://$serverip/mss/fixes/offliewebinfraskel
+
+tar cvJf offliewebinfra.tar.xz -T offliewebinfraskel
+tar xf offliewebinfra.tar.xz -C /
+
+cd /var/www/html/indexer
+./indexer.sh
+
+mssipchange
+
+echo "`date`: offlinewebinfra updated" >> /var/log/fixlog
+
