@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Mon Feb 4 2019 - jigish.gohil@myscoolserver.com
+
+- Update firefox on 1604
+- Add gambas3 on 1604
+- 1804 images and infrastructure /home/mss/switchmss.sh
+  remove scilab
+  add gambas3, flashplayer, sigil
+  1804 ltsp image is not compatible with 1604 server
+- ltsp fixes in restore.sh
+
+-------------------------------------------------------------------
 Fri Jan 12 2018 - jigish.gohil@myscoolserver.com
 
 - add exe
