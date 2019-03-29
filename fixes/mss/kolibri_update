@@ -10,4 +10,5 @@ rm /recovery/offlinewebarchives/$APP.pex
 chown mssadmin /home/mssadmin -R
 systemctl enable $APP
 systemctl start $APP
+
 echo "`date`: $APP upgrade successful." >> /var/log/fixlog
