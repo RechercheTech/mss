@@ -3,7 +3,7 @@
 APP=kolibri
 systemctl stop $APP
 cd /recovery/offlinewebarchives/
-wget -c https://github.com/learningequality/kolibri/releases/download/v0.12.4/kolibri-0.12.4.pex -O $APP.pex
+wget -c https://github.com/learningequality/kolibri/releases/download/v0.12.5/kolibri-0.12.5.pex -O $APP.pex
 mv kolibri.pex /usr/local/bin/kolibri
 chmod a+x /usr/local/bin/kolibri
 chown mssadmin /home/mssadmin -R
