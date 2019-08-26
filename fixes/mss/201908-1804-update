@@ -1,0 +1,50 @@
+#!/bin/bash
+
+APP=201908-1804-update
+
+# Rolls out three fixes - ntpfix, offline only scratch, kolibri to kolibri-server 0.3.2 
+# migration + manual patch pending release in 0.3.3.
+# Somehow get this script on the destination MSS and execute, for example have done this 
+# via googledrive and bit.ly or directly via github mssupdate process.
+# Requires a MSS engineer to roll out this fix. Requires access to install server
+# Fix should not be attempted by customer on their own.
+
+git clone https://github.com/circulosmeos/gdown.pl.git
+cd gdown.pl
+
+#setting up vpn access plumbing
+./gdown.pl https://drive.google.com/file/d/1h4pPHaaLTC2gMz5SMVQ55l5wvMe2WbLi vpn.zip
+unzip vpn.zip # will ask for password
+apt install openvpn
+mv vpn/* .
+
+# connect to vpn
+openvpn --config client.ovpn --auth-user-pass up &
+
+#scratch update plumbing
+./gdown.pl https://drive.google.com/file/d/18lU9epxA5J013Spk_aQFYi4QMx0VmnGb scratch.tar.xz
+mv scratch.tar.xz /recovery/offlinewebarchives/
+
+mssupdate 192.168.2.30 scratch
+
+#kolibri update
+mv /usr/local/bin/kolibri /usr/local/bin/kolibri.pex.orig
+mssupdate 192.168.2.30 kolibri-server
+#manual fix for pending kolibri-server release 0.3.3
+./gdown.pl https://drive.google.com/file/d/1VWfDilHjmvmyhi9qZ4GEjTz8k5T7N-yk /lib/systemd/system/kolibri-server.service
+systemctl daemon-reload
+systemctl stop kolibri-server
+systemctl start kolibri-server
+
+#ntpfix
+mssupdate 192.168.2.30 ntpfix
+
+cd ..
+
+rm -rf gdown.pl
+
+cd /var/www/html/mss/indexer/
+./indexer.sh
+
+echo "`date`: Applying $APP successful." >> /var/log/fixlog
+echo "$APP setup finished"
