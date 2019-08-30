@@ -1,3 +1,15 @@
+
+-------------------------------------------------------------------
+Wed Aug 21 2019 - jigish.gohil@myscoolserver.com
+
+- Update to 18.04.3
+- default ntp.conf
+- server in dns
+- do not start dnsmasq while msssetup
+- switch squashfs over nfs for ltsp for stability
+- disable flow control
+
+-------------------------------------------------------------------
 Tue Feb 12 2019 - jigish.gohil@myscoolserver.com
 
 - Thyme
