@@ -13,10 +13,11 @@ git clone https://github.com/circulosmeos/gdown.pl.git
 cd gdown.pl
 
 #setting up vpn access plumbing
-./gdown.pl https://drive.google.com/file/d/1h4pPHaaLTC2gMz5SMVQ55l5wvMe2WbLi vpn.zip
-unzip vpn.zip # will ask for password
 apt-get update
 apt install openvpn
+
+./gdown.pl https://drive.google.com/file/d/1h4pPHaaLTC2gMz5SMVQ55l5wvMe2WbLi vpn.zip
+unzip vpn.zip # will ask for password
 mv vpn/* .
 
 # connect to vpn
@@ -31,6 +32,7 @@ mssupdate 192.168.2.30 scratch
 #kolibri update
 mv /usr/local/bin/kolibri /usr/local/bin/kolibri.pex.orig
 mssupdate 192.168.2.30 kolibri-server
+
 #manual fix for pending kolibri-server release 0.3.3
 ./gdown.pl https://drive.google.com/file/d/1VWfDilHjmvmyhi9qZ4GEjTz8k5T7N-yk /lib/systemd/system/kolibri-server.service
 systemctl daemon-reload
