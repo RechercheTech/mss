@@ -15,6 +15,7 @@ cd gdown.pl
 #setting up vpn access plumbing
 ./gdown.pl https://drive.google.com/file/d/1h4pPHaaLTC2gMz5SMVQ55l5wvMe2WbLi vpn.zip
 unzip vpn.zip # will ask for password
+apt-get update
 apt install openvpn
 mv vpn/* .
 
