@@ -8,6 +8,7 @@ Wed Aug 21 2019 - jigish.gohil@myscoolserver.com
 - do not start dnsmasq while msssetup
 - switch squashfs over nfs for ltsp for stability
 - disable flow control
+- disable /home in nfs
 
 -------------------------------------------------------------------
 Tue Feb 12 2019 - jigish.gohil@myscoolserver.com

@@ -1,0 +1,3 @@
+#!/bin/bash
+sed -i -e 's/no_root_squash/root_squash/g' /etc/exports
+systemctl restart nfs-server
