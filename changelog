@@ -1,3 +1,22 @@
+-------------------------------------------------------------------
+Sat Dec 15 2019 - jigish.gohil@myscoolserver.com
+
+- marathi
+
+-------------------------------------------------------------------
+Fri Oct 25 2019 - jigish.gohil@myscoolserver.com
+
+- add kde
+- remove flowcontrol
+- wacom-panel
+- cleanup and bug fixes
+
+-------------------------------------------------------------------
+Tue Oct 01 2019 - jigish.gohil@myscoolserver.com
+
+- apt upgrade
+- add more xserver input drivers
+- fix live-grub-stick to work with 18.04.3 image
 
 -------------------------------------------------------------------
 Wed Aug 21 2019 - jigish.gohil@myscoolserver.com
