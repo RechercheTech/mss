@@ -1,0 +1,12 @@
+#!/bin/bash
+tarball=zabbix-update.tar
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar xf $tarball && rm $tarball
+systemctl stop zabbix-proxy
+rm /var/lib/zabbix/*.db
+dpkg -i zabb*.deb
+rm zabb*.deb
+systemctl restart zabbix-proxy
+echo "`date`: $tarball applied" >> /var/log/fixlog
+
