@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jan 28 2020 - jigish.gohil@myscoolserver.com
+
+- onboard should show in smartclass implementation of issue #94
+  Can also be called on non-smartclass by supplying LDM_ONBOARD=true
+
+-------------------------------------------------------------------
 Sat Dec 31 2019 - jigish.gohil@myscoolserver.com
 
 - kolibri
