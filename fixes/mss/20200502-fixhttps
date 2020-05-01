@@ -1,0 +1,7 @@
+#!/bin/bash
+tarball=fixhttps.tar
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar xf $tarball -C / && rm $tarball
+systemctl restart nginx
+echo "`date`: $tarball applied" >> /var/log/fixlog
