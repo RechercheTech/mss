@@ -1,0 +1,24 @@
+#!/bin/bash
+if test -f /home/mssadmin/.config/accesspoint.conf; then
+	. /home/mssadmin/.config/accesspoint.conf
+fi
+AP_SSID=${AP_SSID:=MSS}
+case $1 in
+	stop)
+		create_ap --stop ap0 || true
+                ;;
+	enable)
+		grep -q mssap /usr/bin/mssipchange || echo 'mssap || true'  >> /usr/bin/mssipchange
+		;;
+	disable)
+		grep -q mssap /usr/bin/mssipchange && sed -i -e '/mssap/d' /usr/bin/mssipchange
+		;;
+	unmanage)
+		create_ap --fix-unmanaged
+                ;;
+        *)
+		. /usr/bin/networkvariables.sh >/dev/null
+                pgrep create_ap || create_ap -m bridge $WL_IFACE $DHCP_IFACES $AP_SSID $AP_PASS&
+                ;;
+
+esac
