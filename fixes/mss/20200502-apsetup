@@ -1,0 +1,5 @@
+tarball=apsetup.tar
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar xf $tarball -C / && rm $tarball
+echo "`date`: $tarball applied" >> /var/log/fixlog
