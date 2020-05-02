@@ -1,6 +1,9 @@
 #!/bin/bash
 serverip=recherchetech.github.io
 wget http://$serverip/mss/fixes/mssipchangeusbap
+wget http://$serverip/mss/fixes/mssap
 mv mssipchangeusbap /usr/bin/mssipchange
+mv mssap /usr/bin/
 chmod +x /usr/bin/mssipchange
+chmod +x /usr/bin/mssap
 echo "`date`: fixwifi applied" >> /var/log/fixlog
