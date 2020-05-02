@@ -46,13 +46,13 @@ for eth_ in $DHCP_IFACES
 	#dhcp-range=10.0.0.0,proxy
 	sed -i -e s"@port=0@\#port=0@g" /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 done
-if ps -A -o cmd | grep -E '(/| )dhclient .' | grep -q $DHCP_IFACES; then
-        sed -i -e s"@dhcp-range=.*proxy@dhcp-range=$SERVER_IP,proxy@g" /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
-        gatewayip=$(ip route |grep default | cut -d " " -f 3)
-else
+#if ps -A -o cmd | grep -E '(/| )dhclient .' | grep -q $DHCP_IFACES; then
+#        sed -i -e s"@dhcp-range=.*proxy@dhcp-range=$SERVER_IP,proxy@g" /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+#        gatewayip=$(ip route |grep default | cut -d " " -f 3)
+#else
 	sed -i -e '/proxy/d' /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
         gatewayip=$gateway
-fi
+#fi
 echo "dhcp-option=3,$gatewayip" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 echo "dhcp-option=66,$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 echo "address=/mss.server/$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
