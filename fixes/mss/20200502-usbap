@@ -1,9 +1,10 @@
 #!/bin/bash
 serverip=recherchetech.github.io
-wget http://$serverip/mss/fixes/mssipchangeusbap
-wget http://$serverip/mss/fixes/mssap
+wget http://$serverip/mss/fixes/mssipchangeusbap http://$serverip/mss/fixes/mssap http://$serverip/mss/fixes/99-x-usbnet.rules
 mv mssipchangeusbap /usr/bin/mssipchange
 mv mssap /usr/bin/
+mv 99-x-usbnet.rules /etc/udev/rules.d/
+udevadm control --reload
 chmod +x /usr/bin/mssipchange
 chmod +x /usr/bin/mssap
-echo "`date`: fixwifi applied" >> /var/log/fixlog
+echo "`date`: usbap applied" >> /var/log/fixlog
