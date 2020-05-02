@@ -62,6 +62,7 @@ systemctl restart nfs-kernel-server
 #sed -i -e s"@restrict.*notrap@restrict $DHCP_SUBNETS mask $DHCP_NETMASKS nomodify notrap@g" /etc/ntp.conf
 #systemctl restart ntp
 sed -i -e s"@http://.*:@http://$SERVER_IP:@g" /var/www/html/mss/index.html 2>/dev/null || true
-if lsmod | grep usbnet; then
-        pgrep mssap || mssap
+if test -f /usr/bin/usbap; then
+        . /usr/bin/usbap && rm /usr/bin/usbap
 fi
+
