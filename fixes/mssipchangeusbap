@@ -51,9 +51,9 @@ done
 #        gatewayip=$(ip route |grep default | cut -d " " -f 3)
 #else
 	sed -i -e '/proxy/d' /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
-        gatewayip=$gateway
+#        gatewayip=$gateway
 #fi
-echo "dhcp-option=3,$gatewayip" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+echo "dhcp-option=3,$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 echo "dhcp-option=66,$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 echo "dhcp-option=6,$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 echo "address=/mss.server/$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
