@@ -17,7 +17,13 @@ case $1 in
 		create_ap --fix-unmanaged
                 ;;
         *)
-		. /usr/bin/networkvariables.sh >/dev/null
+                i=0
+                while [ $i -lt 5 ]
+                do
+		      . /usr/bin/networkvariables.sh >/dev/null && break
+                      sleep 2
+                      (i++)
+                done
                 pgrep create_ap || create_ap -m bridge $WL_IFACE $DHCP_IFACES $AP_SSID $AP_PASS&
                 ;;
 
