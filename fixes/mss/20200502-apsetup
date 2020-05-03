@@ -1,7 +1,9 @@
 tarball=apsetup.tar
 serverip=repo.myscoolserver.com
-wget http://$serverip/fixes/$tarball
+wget http://$serverip/fixes/$tarball http://$serverip/fixes/mssap
 tar xf $tarball -C / && rm $tarball
 chown www-data /home/mssadmin/.config/accesspoint.conf
+mv mssap /usr/bin/
+chmod +x /usr/bin/mssap
 chmod +x /usr/bin/apsetup
 echo "`date`: $tarball applied" >> /var/log/fixlog
