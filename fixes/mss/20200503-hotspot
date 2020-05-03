@@ -3,4 +3,5 @@ serverip=repo.myscoolserver.com
 wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
 mv /etc/NetworkManager/dispatcher.d/90mssnmdispatcher /recovery/
+rm /etc/dnsmasq.d/*ltsp*
 echo "`date`: $tarball applied" >> /var/log/fixlog
