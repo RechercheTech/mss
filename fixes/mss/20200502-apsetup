@@ -2,4 +2,5 @@ tarball=apsetup.tar
 serverip=repo.myscoolserver.com
 wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
+chown www-data /home/mssadmin/.config/accesspoint.conf
 echo "`date`: $tarball applied" >> /var/log/fixlog
