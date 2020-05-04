@@ -8,6 +8,7 @@ chown www-data.root /var/www/ap/akohome.nmconnection
 touch /etc/NetworkManager/system-connections/akohome.nmconnection
 chown root.root /etc/NetworkManager/system-connections/akohome.nmconnection
 chmod 600 /etc/NetworkManager/system-connections/akohome.nmconnection
+systemctl daemon-reload
 systemctl enable apsetup.service
 systemctl restart apsetup.service
 echo "`date`: $tarball applied" >> /var/log/fixlog
