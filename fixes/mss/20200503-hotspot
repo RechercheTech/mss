@@ -3,5 +3,6 @@ serverip=repo.myscoolserver.com
 wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
 rm /etc/dnsmasq.d/*ltsp*
+chown www-data /etc/NetworkManager/system-connections/akohome.nmconnection
 sed s"@grep -v wl |@@"g /mnt/sq/usr/bin/networkvariables.sh
 echo "`date`: $tarball applied" >> /var/log/fixlog
