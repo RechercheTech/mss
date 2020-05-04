@@ -1,9 +1,13 @@
 tarball=apsetup.tar
 serverip=repo.myscoolserver.com
-wget http://$serverip/fixes/$tarball http://$serverip/fixes/mssap
+rm /etc/NetworkManager/dispatcher.d/90mssnmdispatcher
+wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
-chown www-data /home/mssadmin/.config/accesspoint.conf
-mv mssap /usr/bin/
-chmod +x /usr/bin/mssap
-chmod +x /usr/bin/apsetup
+chmod +x /usr/bin/apsetup /usr/bin/mssipchangeap /usr/bin/networkvariablesap.sh
+chown www-data.root /var/www/ap/akohome.nmconnection
+touch /etc/NetworkManager/system-connections/akohome.nmconnection
+chown root.root /etc/NetworkManager/system-connections/akohome.nmconnection
+chmod 600 /etc/NetworkManager/system-connections/akohome.nmconnection
+systemctl enable apsetup.service
+systemctl restart apsetup.service
 echo "`date`: $tarball applied" >> /var/log/fixlog

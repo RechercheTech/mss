@@ -1,2 +1,0 @@
-SUBSYSTEM=="usb", ENV{DRIVER}=="rndis_host", ACTION=="add", RUN{program}+="/usr/bin/mssap stop"
-SUBSYSTEM=="usb", ENV{DRIVER}=="rndis_host", ACTION=="add", RUN{program}+="/bin/sh -c 'echo /usr/bin/mssap > /usr/bin/usbap'"
