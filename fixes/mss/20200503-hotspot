@@ -1,6 +1,6 @@
 tarball=hotspot.tar
 serverip=repo.myscoolserver.com
-wget http://$serverip/fixes/$tarball http://$serverip/mss/fixes/mssipchangeusbap
+wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
 rm /etc/dnsmasq.d/*ltsp*
 chown www-data /etc/NetworkManager/system-connections/akohome.nmconnection
