@@ -2,5 +2,8 @@ tarball=apsetup.tar
 serverip=repo.myscoolserver.com
 wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
-chmod +x /usr/bin/apsetup
+chmod +x /usr/bin/apsetup /usr/bin/mssipchangeap /usr/bin/networkvariablesap.sh
+chown www-data /var/www/ap/akohome.nmconnection
+systemctl enable apsetup.service
+systemctl restart apsetup.service
 echo "`date`: $tarball applied" >> /var/log/fixlog
