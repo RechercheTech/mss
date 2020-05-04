@@ -1,8 +1,10 @@
 tarball=hotspot.tar
 serverip=repo.myscoolserver.com
-wget http://$serverip/fixes/$tarball
+wget http://$serverip/fixes/$tarball http://$serverip/mss/fixes/mssipchangeusbap
 tar xf $tarball -C / && rm $tarball
 rm /etc/dnsmasq.d/*ltsp*
 chown www-data /etc/NetworkManager/system-connections/akohome.nmconnection
+mv mssipchangeusbap /usr/bin/mssipchange
+chmod +x /usr/bin/mssipchange
 sed s"@grep -v wl |@@"g /mnt/sq/usr/bin/networkvariables.sh
 echo "`date`: $tarball applied" >> /var/log/fixlog
