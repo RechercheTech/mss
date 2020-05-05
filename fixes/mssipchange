@@ -19,8 +19,10 @@
 #               Alex Savin <alexqwesa@opensuse.org>
 
 . /usr/bin/networkvariables.sh
-sed -i -e s"@nfsroot=.*@nfsroot=$SERVER_IP:/srv/ubuntu-livecd initrd=life-initrd.lz -- splash quiet@g" /var/lib/tftpboot/ltsp/amd64/pxelinux.cfg/default
-ltsp-config dnsmasq --overwrite
+#sed -i -e s"@nfsroot=.*:/opt/ltsp/images@nfsroot=$SERVER_IP:/opt/ltsp/images@g" /var/lib/tftpboot/ltsp/amd64/pxelinux.cfg/default
+sysctl -w net.ipv4.ip_forward=1
+ln -snf /etc/resolv.conf /run/dnsmasq/resolv.conf
+ltsp-config dnsmasq --enable-dns --overwrite
 for eth_ in $DHCP_IFACES
 	do
 	((i++))
@@ -53,10 +55,10 @@ else
 fi
 echo "dhcp-option=3,$gatewayip" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 echo "dhcp-option=66,$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
+echo "address=/mss.server/$SERVER_IP" >> /etc/dnsmasq.d/ltsp-server-dnsmasq.conf
 touch /etc/dnsmasq.d/network-manager && rm /etc/dnsmasq.d/network-manager
 systemctl restart dnsmasq
 systemctl restart nfs-kernel-server
-sed -i -e s"@http://.*:4242@http://$SERVER_IP:4242@g" /var/www/html/mss/index.html 2>/dev/null || true
-sed -i -e s"@http://.*:8008@http://$SERVER_IP:8008@g" /var/www/html/mss/index.html 2>/dev/null || true
-sed -i -e s"@http://.*:81@http://$SERVER_IP:81@g" /var/www/html/mss/index.html 2>/dev/null || true
-
+#sed -i -e s"@restrict.*notrap@restrict $DHCP_SUBNETS mask $DHCP_NETMASKS nomodify notrap@g" /etc/ntp.conf
+#systemctl restart ntp
+sed -i -e s"@http://.*:@http://$SERVER_IP:@g" /var/www/html/mss/index.html 2>/dev/null || true
