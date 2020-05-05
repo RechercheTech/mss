@@ -1,0 +1,7 @@
+#!/bin/bash
+serverip=repo.myscoolserver.com
+wget http://$serverip/mss/fixes/90akonmdispatcher
+mv 90akonmdispatcher /etc/NetworkManager/dispatcher.d/
+chown root.root /etc/NetworkManager/dispatcher.d/90akonmdispatcher
+chmod +x /etc/NetworkManager/dispatcher.d/90akonmdispatcher
+echo "`date`: 90akonmdispatcher applied" >> /var/log/fixlog

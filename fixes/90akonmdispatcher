@@ -1,0 +1,9 @@
+#!/bin/bash
+#setup dnsmasq on IP address change
+if [ "$2" = "up" ];then
+	. /usr/bin/networkvariables.sh
+	if [ ! -z "$DHCPD_INTERFACE" ]; then
+		iptables -t nat -A POSTROUTING -o $DHCPD_INTERFACE -j MASQUERADE
+	fi
+fi
+
