@@ -4,7 +4,7 @@ rm /etc/NetworkManager/dispatcher.d/90mssnmdispatcher
 wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
 chmod +x /usr/bin/apsetup /usr/bin/mssipchangeap /usr/bin/networkvariablesap.sh
-chown www-data.root /var/www/ap/akohome.nmconnection
+chown www-data.root /var/www/ap -R
 touch /etc/NetworkManager/system-connections/akohome.nmconnection
 chown root.root /etc/NetworkManager/system-connections/akohome.nmconnection
 chmod 600 /etc/NetworkManager/system-connections/akohome.nmconnection /var/www/ap/akohome.nmconnection
