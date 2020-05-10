@@ -4,11 +4,7 @@ rm /etc/NetworkManager/dispatcher.d/90mssnmdispatcher 2>/dev/null || true
 wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
 chmod +x /usr/bin/akosetup-cockpit /usr/bin/mssipchangeap /usr/bin/networkvariablesap.sh
-chown www-data.root /var/www/ap -R
 touch /etc/NetworkManager/system-connections/akohome.nmconnection
 chown root.root /etc/NetworkManager/system-connections/akohome.nmconnection
-chmod 600 /etc/NetworkManager/system-connections/akohome.nmconnection /var/www/ap/akohome.nmconnection
-systemctl daemon-reload
-systemctl enable apsetup.service
-systemctl restart apsetup.service
+chmod 600 /etc/NetworkManager/system-connections/akohome.nmconnection
 echo "`date`: $tarball applied" >> /var/log/fixlog
