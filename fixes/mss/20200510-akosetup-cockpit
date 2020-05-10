@@ -1,0 +1,13 @@
+tarball=akosetup-cockpit.tar.xz
+serverip=repo.myscoolserver.com
+rm /etc/NetworkManager/dispatcher.d/90mssnmdispatcher 2>/dev/null || true
+wget http://$serverip/fixes/$tarball
+tar xf $tarball -C / && rm $tarball
+chmod +x /usr/bin/akosetup-cockpit /usr/bin/mssipchangeap /usr/bin/networkvariablesap.sh
+touch /etc/NetworkManager/system-connections/akohome.nmconnection
+chown root.root /etc/NetworkManager/system-connections/akohome.nmconnection
+chmod 600 /etc/NetworkManager/system-connections/akohome.nmconnection
+if test -f /lib/systemd/system/apsetup.service; then
+	systemctl disable apsetup
+fi
+echo "`date`: $tarball applied" >> /var/log/fixlog
