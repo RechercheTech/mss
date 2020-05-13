@@ -5,9 +5,9 @@ wget http://$serverip/fixes/$tarball
 tar xf $tarball -C / && rm $tarball
 chmod +x /usr/bin/akosetup-cockpit /usr/bin/mssipchangeap /usr/bin/networkvariablesap.sh
 touch /etc/NetworkManager/system-connections/akohome.nmconnection
-chown root.root /etc/NetworkManager/system-connections/akohome.nmconnection
-chmod 600 /etc/NetworkManager/system-connections/akohome.nmconnection
+chown root.root /etc/NetworkManager/system-connections/*
+chmod 600 /etc/NetworkManager/system-connections/*
 if test -f /lib/systemd/system/apsetup.service; then
-	systemctl disable apsetup
+	systemctl disable apsetup; rm /lib/systemd/system/apsetup.service
 fi
 echo "`date`: $tarball applied" >> /var/log/fixlog
