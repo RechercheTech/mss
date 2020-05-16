@@ -9,6 +9,7 @@ chown root.root /etc/NetworkManager/system-connections/*
 chmod 600 /etc/NetworkManager/system-connections/*
 chown mssadmin /usr/share/cockpit/akosetup/ap.conf /usr/share/cockpit/akosetup/ako.js
 chmod 600 /usr/share/cockpit/akosetup/ap.conf /usr/share/cockpit/akosetup/ako.js
+systemctl restart nginx
 if test -f /lib/systemd/system/apsetup.service; then
 	systemctl disable apsetup; rm /lib/systemd/system/apsetup.service
 fi
