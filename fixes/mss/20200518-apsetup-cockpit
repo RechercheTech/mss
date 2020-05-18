@@ -1,0 +1,6 @@
+tarball=apsetup-cockpit.tar.xz
+serverip=repo.myscoolserver.com
+rm /etc/NetworkManager/dispatcher.d/90* 2>/dev/null
+wget http://$serverip/fixes/$tarball
+tar xf $tarball -C / && rm $tarball
+echo "`date`: $tarball applied" >> /var/log/fixlog
