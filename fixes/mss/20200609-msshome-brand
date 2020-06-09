@@ -1,0 +1,15 @@
+#!/bin/bash
+tarball=msshome-brand.tar.xz
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar xf $tarball -C / && rm $tarball
+update-alternatives --remove-all default.plymouth
+if grep -q 18.04 /etc/os-release; then
+    update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/mss-logo/mss-logo.plymouth 150
+else
+    update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/mss-spinner/mss-spinner.plymouth 150
+fi
+update-initramfs -u
+if [ $(arch) != x86_64 ]; then
+    echo "todo pi splash part" 
+fi
