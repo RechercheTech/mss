@@ -12,5 +12,11 @@ fi
 glib-compile-schemas /usr/share/glib-2.0/schemas/
 update-initramfs -u
 if [ $(arch) != x86_64 ]; then
-    echo "todo pi splash part" 
+    if ! grep -q plymouth; then
+        sed -i -e 's@$@ quiet splash plymouth.ignore-serial-consoles@' /boot/firmware/cmdline.txt
+    fi
+    cp /boot/firmware/initrd.img /boot/firmware/initrd.img.$(date +%m%d%H%M)
+    cp /boot/firmware/vmlinuz /boot/firmware/vmlinuz.$(date +%m%d%H%M)
+    cp /boot/initrd.img /boot/firmware/initrd.img
+    cp /boot/vmlinuz /boot/firmware/vmlinuz
 fi
