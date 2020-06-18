@@ -15,8 +15,4 @@ if [ $(arch) != x86_64 ]; then
     if ! grep -q plymouth; then
         sed -i -e 's@$@ quiet splash plymouth.ignore-serial-consoles@' /boot/firmware/cmdline.txt
     fi
-    cp /boot/firmware/initrd.img /boot/firmware/initrd.img.$(date +%m%d%H%M)
-    cp /boot/firmware/vmlinuz /boot/firmware/vmlinuz.$(date +%m%d%H%M)
-    cp /boot/initrd.img /boot/firmware/initrd.img
-    cp /boot/vmlinuz /boot/firmware/vmlinuz
 fi
