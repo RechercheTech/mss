@@ -1,8 +1,13 @@
 #!/bin/bash
 tarball=msshome-brand.tar.xz
 serverip=repo.myscoolserver.com
+TMPDIR=$(mktemp -d)
+cd "$TMPDIR"
 wget http://$serverip/fixes/$tarball
-tar xf $tarball -C / && rm $tarball
+tar xf $tarball && rm $tarball
+chown root.root * -R
+rsync -a ./ /
+cd .. && rm -rf "$TMPDIR"
 update-alternatives --remove-all default.plymouth
 if grep -q 18.04 /etc/os-release; then
     update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/mss-logo/mss-logo.plymouth 150
