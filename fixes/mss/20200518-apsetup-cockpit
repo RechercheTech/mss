@@ -2,6 +2,6 @@ tarball=apsetup-cockpit.tar.xz
 serverip=repo.myscoolserver.com
 rm /etc/NetworkManager/dispatcher.d/90* rm /etc/dnsmasq.d/hotspot.conf /etc/NetworkManager/system-connections/ap.nmconnection 2>/dev/null || true
 wget http://$serverip/fixes/$tarball
-tar xf $tarball -C / && rm $tarball
+tar --keep-directory-symlink --no-overwrite-dir xf $tarball -C / && rm $tarball
 chmod +x /usr/share/cockpit/apsetup/apdnsmasqsetup /usr/share/cockpit/apsetup/90apnmdispatcher
 echo "`date`: $tarball applied" >> /var/log/fixlog

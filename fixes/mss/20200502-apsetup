@@ -2,7 +2,7 @@ tarball=apsetup.tar
 serverip=repo.myscoolserver.com
 rm /etc/NetworkManager/dispatcher.d/90mssnmdispatcher
 wget http://$serverip/fixes/$tarball
-tar xf $tarball -C / && rm $tarball
+tar --keep-directory-symlink --no-overwrite-dir xf $tarball -C / && rm $tarball
 chmod +x /usr/bin/apsetup /usr/bin/mssipchangeap /usr/bin/networkvariablesap.sh
 chown www-data.root /var/www/ap -R
 touch /etc/NetworkManager/system-connections/akohome.nmconnection
