@@ -2,7 +2,7 @@
 tarball=zabbix-update.tar
 serverip=repo.myscoolserver.com
 wget http://$serverip/fixes/$tarball
-tar xf $tarball && rm $tarball
+tar --keep-directory-symlink --no-overwrite-dir xf $tarball && rm $tarball
 systemctl stop zabbix-proxy
 rm /var/lib/zabbix/*.db
 dpkg -i zabb*.deb
