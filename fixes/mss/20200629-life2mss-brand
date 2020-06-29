@@ -1,0 +1,11 @@
+#!/bin/bash
+tarball=life2mss-brand.tar.xz
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar --keep-directory-symlink --no-overwrite-dir xf $tarball -C / && rm $tarball
+rm /etc/nginx/sites-available/default
+systemctl enable nginx
+systemctl restart nginx
+update-initramfs -u
+echo "Replace /usr/share/plymouth/themes/life/watermark.png and /usr/share/backgrounds/life/life.png with branding images"
+echo "Run update-initramfs -u after replacing /usr/share/plymouth/themes/life/watermark.png"
