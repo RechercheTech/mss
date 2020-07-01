@@ -3,7 +3,7 @@ tarball=life2mss-brand.tar.xz
 serverip=repo.myscoolserver.com
 wget http://$serverip/fixes/$tarball
 tar --keep-directory-symlink --no-overwrite-dir -xf $tarball -C / && rm $tarball
-rm /etc/nginx/sites-available/default
+rm /etc/nginx/sites-enabled/default
 systemctl enable nginx
 systemctl restart nginx
 update-initramfs -u
