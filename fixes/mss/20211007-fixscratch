@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#transfer artefacts
+tarball=scratch-web.tar.xz
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar --keep-directory-symlink --no-overwrite-dir -xJf $tarball -C / && rm $tarball
+
+#uncompress image and install chromium
+cd /opt/ltsp/images
+unsquashfs amd64.img
+cd squashfs-root
+mount --bind /proc proc; mount --bind /tmp tmp; mount --bind /sys sys; mount --bind /dev dev; mount --bind /dev/pts dev/pts; 
+chroot . /bin/bash <<EOT
+# These steps till EOT will be exeuted within chroot
+apt update -y
+apt install -y chromium-browser
+echo $$
+exit
+EOT
+umount ./dev/pts ./proc ./sys ./dev ./tmp
+
+#park artefacts inside image chroot
+cp /usr/share/applications/scratch-web.desktop /opt/ltsp/images/squashfs-root/usr/share/applications/scratch-web.desktop
+cp /usr/share/icons/scratch-256.png /opt/ltsp/images/squashfs-root/usr/share/icons/scratch-256.png
+cd ..
+
+#make image
+mksquashfs squashfs-root amd64_new.img -b 1M
+
+#post image making cleanup
+rm amd64.img 
+mv /recovery/.ltsp /recovery/.ltsp.old
+mv amd64_new.img amd64.img
+cp amd64.img /recovery/.ltsp 
+
+#final touch
+recovery.sh create
