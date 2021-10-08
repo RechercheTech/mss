@@ -1,13 +1,18 @@
 #!/bin/bash
 
-#transfer artefacts
+#install scratch-web
+add-apt-repository -u -y ppa:jigish-gohil/education
+apt install -y scratch-web
+
+#transfer artefacts and overwrite the launcher from scratch-web*.deb
 tarball=scratch-web.tar.xz
 serverip=repo.myscoolserver.com
 wget http://$serverip/fixes/$tarball
-tar --keep-directory-symlink --no-overwrite-dir -xJf $tarball -C / && rm $tarball
+tar -xJf $tarball -C / && rm $tarball
 
 #uncompress image and install chromium
 cd /opt/ltsp/images
+echo "Unsquashing..."
 unsquashfs amd64.img
 cd squashfs-root
 mount --bind /proc proc; mount --bind /tmp tmp; mount --bind /sys sys; mount --bind /dev dev; mount --bind /dev/pts dev/pts; 
@@ -15,7 +20,7 @@ chroot . /bin/bash <<EOT
 # These steps till EOT will be exeuted within chroot
 apt update -y
 apt install -y chromium-browser
-echo $$
+echo "Done inside chroot"
 exit
 EOT
 umount ./dev/pts ./proc ./sys ./dev ./tmp
@@ -26,13 +31,20 @@ cp /usr/share/icons/scratch-256.png /opt/ltsp/images/squashfs-root/usr/share/ico
 cd ..
 
 #make image
+echo "Squashing..."
 mksquashfs squashfs-root amd64_new.img -b 1M
 
 #post image making cleanup
+echo "Image cleanup started"
 rm amd64.img 
-mv /recovery/.ltsp /recovery/.ltsp.old
 mv amd64_new.img amd64.img
 cp amd64.img /recovery/.ltsp 
+echo "Image cleanup done"
 
-#final touch
-recovery.sh create
+echo "Cleaning up and fixing webpage"
+rm -rf /var/www/html/mss/scratch
+rm /var/www/html/mss/indexer/htmls/60-scratch.html
+cd /var/www/html/mss/indexer/
+./indexer.sh
+
+echo "Remember to run recovery.sh create before saying 'Done!'"
