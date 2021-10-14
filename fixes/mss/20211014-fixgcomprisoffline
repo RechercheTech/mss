@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Install gcompris 1.1
+add-apt-repository -u -y ppa:jigish-gohil/education
+apt install -y gcompris-qt
+
+# Transfer artefacts and park them in their destination
+tarball=gcompris-user-data-en_us.tar.xz
+serverip=repo.myscoolserver.com
+wget http://$serverip/fixes/$tarball
+tar -xJf $tarball -C / && rm $tarball
+
+# Transfer cache and config to existing gcomrpis users
+rm -rf /home/*/.config/gcompris
+rm -rf /home/*/.cache/KDE
+
+for i in `ls /home/`; 
+do 
+ cp -r /etc/skel/.config/gcompris /home/$i/.config/; 
+ cp -r /etc/skel/.cache/KDE /home/$i/.cache/; 
+ chown $i.$i /home/$i/.cache/KDE -R; 
+ chown $i.$i /home/$i/.config/gcompris -R; 
+done;
+
+echo "Remember to run recovery.sh create before saying 'Done!'"
