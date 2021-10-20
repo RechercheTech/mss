@@ -17,8 +17,8 @@ rm -rf /home/*/.cache/KDE
 for i in `ls /home/`; 
 do 
  cp -r /etc/skel/.config/gcompris /home/$i/.config/; 
- cp -r /etc/skel/.cache/KDE /home/$i/.cache/; 
- chown $i.$i /home/$i/.cache/KDE -R; 
+ cp -r /etc/skel/.cache /home/$i/; 
+ chown $i.$i /home/$i/.cache -R; 
  chown $i.$i /home/$i/.config/gcompris -R; 
 done;
 
