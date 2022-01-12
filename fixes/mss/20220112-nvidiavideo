@@ -1,0 +1,3 @@
+# quick fix for missing Nvidia drivers. See https://github.com/RechercheTech/mss/issues/184 for details. 
+(! grep -q KERNEL_PARAMETERS=\"nouveau.modeset=0 /etc/ltsp/ltsp.conf) && sed -i -e '/^KERNEL_PARAMETERS="/s/KERNEL_PARAMETERS="/KERNEL_PARAMETERS="nouveau.modeset=0 /' /etc/ltsp/ltsp.conf
+echo "`date`: nvidia video quick fix applied" >> /var/log/fixlog
