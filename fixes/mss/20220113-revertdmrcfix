@@ -1,0 +1,5 @@
+#comments the below lines in /etc/ltsp/ltsp.conf
+#FSTAB_03="server:/var/cache/lightdm/dmrc  /var/cache/lightdm/dmrc nfs defaults,nolock,rsize=32768,wsize=32768 0 0"
+#FSTAB_04="server:/var/lib/AccountsService/users /var/lib/AccountsService/users nfs defaults,nolock,rsize=32768,wsize=32768 0 0"
+
+sed -i "/FSTAB_03/,/FSTAB_04/"' s/^/#/' /etc/ltsp/ltsp.conf
