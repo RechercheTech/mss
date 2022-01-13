@@ -1,0 +1,22 @@
+#!/bin/bash
+
+[ ! -d /installer ] && mkdir -p /installer
+! grep -q "/home/installer" /etc/fstab && echo "/home/installer	/installer	none	defaults,bind	0 0" >> /etc/fstab
+mount /installer
+
+# For mounting /installer onto install target client and getting latest mssinstaller.bsx to it
+ltsConf_file=/etc/ltsp/ltsp.conf
+cat > entry <<- EOF
+# For getting latest mssinstaller.bsx to install target client
+FSTAB_99="server:/installer /installer nfs defaults,nolock,rsize=32768,wsize=32768 0 0"'
+EOF
+replacement=$(sed 's@[/\&]@\\&@g;s/$/\\/' entry; echo .)
+replacement=${replacement%.}
+if ! grep -q "^FSTAB_99" "$ltsConf_file"; then
+  sed -i -e "/FSTAB_02/a$replacement" $ltsConf_file
+fi
+
+echo "/installer   *(ro,root_squash,async,no_subtree_check)" > /etc/exports.d/ltsp-mss-installer.exports
+exportfs -r
+
+echo "`date`: activated mss installer" >> /var/log/fixlog
