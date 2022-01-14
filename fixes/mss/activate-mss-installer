@@ -19,4 +19,38 @@ fi
 echo "/installer   *(ro,root_squash,async,no_subtree_check)" > /etc/exports.d/ltsp-mss-installer.exports
 exportfs -r
 
+cat >/var/www/html/mss/syncwebcontent <<EOT
+#!/bin/bash
+rsync -avP --exclude 'mongo.log.*' --exclude 'postmsssetup' --exclude 'syncwebcontent' rsync://\$serverip:/mssweb/ /var/www/html/mss/
+echo "Web content sync completed."
+EOT
+
+# postmsssetup
+cat >/var/www/html/mss/postmsssetup <<EOT
+#!/bin/bash
+mssupdate \$serverip syncwebcontent
+EOT
+
+# setup rsync daemon for speed
+cat >/etc/rsyncd.conf <<EOT
+gid = users
+read only = true
+use chroot = true
+transfer logging = true
+log format = %h %o %f %l %b
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+#hosts allow = trusted.hosts
+slp refresh = 300
+use slp = false
+#[Example]
+#       path = /home/Example
+#       comment = An Example
+#       auth users = user
+#       secrets file = /etc/rsyncd.secrets
+[mssweb]
+        path = /var/www/html/mss
+        comment = MSS Web Content
+EOT
+
 echo "`date`: activated mss installer" >> /var/log/fixlog
