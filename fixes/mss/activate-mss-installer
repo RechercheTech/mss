@@ -1,5 +1,6 @@
 #!/bin/bash
 
+[ ! -d /home/installer ] && mkdir -p /home/installer
 [ ! -d /installer ] && mkdir -p /installer
 ! grep -q "/home/installer" /etc/fstab && echo "/home/installer	/installer	none	defaults,bind	0 0" >> /etc/fstab
 mount /installer
