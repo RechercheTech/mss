@@ -1,11 +1,15 @@
 #!/bin/bash
 
+## zsync needed to sync updates to installer files
+apt install -y zsync
+
+# create installer's abode
 [ ! -d /home/installer ] && mkdir -p /home/installer
 [ ! -d /installer ] && mkdir -p /installer
 ! grep -q "/home/installer" /etc/fstab && echo "/home/installer	/installer	none	defaults,bind	0 0" >> /etc/fstab
 mount /installer
 
-# For mounting /installer onto install target client and getting latest mssinstaller.bsx to it
+## For mounting /installer onto install target client and getting latest mssinstaller.bsx to it
 ltsConf_file=/etc/ltsp/ltsp.conf
 cat > entry <<- EOF
 # For getting latest mssinstaller.bsx to install target client
@@ -20,16 +24,17 @@ fi
 echo "/installer   *(ro,root_squash,async,no_subtree_check)" > /etc/exports.d/ltsp-mss-installer.exports
 exportfs -r
 
+## for applying post mss setup customisations
+
+cat >/var/www/html/mss/postmsssetup <<EOT
+#!/bin/bash
+mssupdate \$serverip syncwebcontent
+EOT
+
 cat >/var/www/html/mss/syncwebcontent <<EOT
 #!/bin/bash
 rsync -avP --exclude 'mongo.log.*' --exclude 'postmsssetup' --exclude 'syncwebcontent' rsync://\$serverip:/mssweb/ /var/www/html/mss/
 echo "Web content sync completed."
-EOT
-
-# postmsssetup
-cat >/var/www/html/mss/postmsssetup <<EOT
-#!/bin/bash
-mssupdate \$serverip syncwebcontent
 EOT
 
 # setup rsync daemon for speed
