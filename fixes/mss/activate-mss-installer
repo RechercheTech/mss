@@ -13,7 +13,7 @@ mount /installer
 ltsConf_file=/etc/ltsp/ltsp.conf
 cat > entry <<- EOF
 # For getting latest mssinstaller.bsx to install target client
-FSTAB_99="server:/installer /installer nfs defaults,nolock,rsize=32768,wsize=32768 0 0"'
+FSTAB_99="server:/installer /installer nfs defaults,nolock,rsize=32768,wsize=32768 0 0"
 EOF
 replacement=$(sed 's@[/\&]@\\&@g;s/$/\\/' entry; echo .)
 replacement=${replacement%.}
