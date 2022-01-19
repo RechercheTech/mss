@@ -26,16 +26,20 @@ exportfs -r
 
 ## for applying post mss setup customisations
 
-cat >/var/www/html/mss/postmsssetup <<EOT
+cat >/installer/postmsssetup <<EOT
 #!/bin/bash
 mssupdate \$serverip syncwebcontent
 EOT
 
-cat >/var/www/html/mss/syncwebcontent <<EOT
+ln -s /installer/postmsssetup /var/www/html/postmsssetup
+
+cat >/installer/syncwebcontent <<EOT
 #!/bin/bash
 rsync -avP --exclude 'mongo.log.*' --exclude 'postmsssetup' --exclude 'syncwebcontent' rsync://\$serverip:/mssweb/ /var/www/html/mss/
 echo "Web content sync completed."
 EOT
+
+ln -s /installer/syncwebcontent /var/www/html/syncwebcontent
 
 # setup rsync daemon for speed
 cat >/etc/rsyncd.conf <<EOT
