@@ -63,4 +63,7 @@ use slp = false
         comment = MSS Web Content
 EOT
 
+# fetch latest installer
+rsync -avP -e "ssh -p 2230" rsync://support.myscoolserver.com:/home/mss/content2/mssinstaller.bsx /installer/mssinstaller.bsx
+
 echo "`date`: activated mss installer" >> /var/log/fixlog
