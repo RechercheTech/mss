@@ -67,6 +67,7 @@ EOT
 rsync -avP -e "ssh -p 2230" rsync://support.myscoolserver.com:/home/mss/content2/mssinstaller.bsx /installer/mssinstaller.bsx
 chmod a+x /installer/mssinstaller.bsx
 # This is needed after a zsync update which leaves it as owner rw only
-chmod a+r /installer/mss.tar /installer/kolibri.tar
+[ -f /installer/mss.tar ] && chmod a+r /installer/mss.tar 
+[ -f /installer/kolibri.tar ] && chmod a+r /installer/kolibri.tar
 
 echo "`date`: activated mss installer" >> /var/log/fixlog
