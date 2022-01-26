@@ -64,7 +64,7 @@ use slp = false
 EOT
 
 # fetch latest installer
-rsync -avP rsync://support.myscoolserver.com:8730/home/mss/content2/mssinstaller.bsx /installer/mssinstaller.bsx
+rsync -avP rsync://support.myscoolserver.com:8730/mssinstaller/mssinstaller.bsx /installer/mssinstaller.bsx
 chmod a+x /installer/mssinstaller.bsx
 # This is needed after a zsync update which leaves it as owner rw only
 [ -f /installer/mss.tar ] && chmod a+r /installer/mss.tar 
