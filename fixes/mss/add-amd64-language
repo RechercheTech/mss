@@ -1,0 +1,33 @@
+#!/bin/bash
+
+newlang=$1
+
+if ! grep -q "amd64ro" /etc/fstab
+cat >> /etc/fstab <<EOT 
+/srv/ltsp/images/amd64.img  /srv/ltsp/amd64ro      squashfs  ro              0       0
+overlay /srv/ltsp/amd64 overlay x-systemd.requires=/srv/ltsp/amd64ro,lowerdir=/srv/ltsp/amd64ro,upperdir=/srv/ltsp/amd64,workdir=/srv/ltsp/amd64work,index=on,nfs_export=on 0 0
+EOT
+mkdir -p /srv/ltsp/amd64 /srv/ltsp/amd64ro /srv/ltsp/amd64work
+else 
+ sed -i "/amd64.img/,/amd64ro/"' s/^#//' /etc/fstab
+fi
+
+mount /srv/ltsp/amd64ro 
+mount /srv/ltsp/amd64
+
+cd /srv/ltsp/amd64 
+mount --bind /proc proc; mount --bind /tmp tmp; mount --bind /sys sys; mount --bind /dev dev; mount --bind /dev/pts dev/pts; 
+chroot .
+apt install -y `check-language-support -l $newlang`
+exit
+umount ./dev/pts ./proc ./sys ./dev ./tmp
+cd ..
+ltsp image amd64 && rm /srv/ltsp/images/amd64.img.old && umount /srv/ltsp/amd64ro && \
+umount /srv/ltsp/amd64 && rm -rf /srv/ltsp/amd64ro /srv/ltsp/amd64 /srv/ltsp/amd64work && \
+sleep 120 # allows backup to /recovery/.ltsp via incron
+
+sed -i "/amd64.img/,/amd64ro/"' s/^/#/' /etc/fstab
+
+rm /recovery/.ltsp.old
+
+echo "`date`: added $newlang to amd64 image" >> /var/log/fixlog
