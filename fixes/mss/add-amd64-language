@@ -2,7 +2,7 @@
 
 newlang=$1
 
-if ! grep -q "amd64ro" /etc/fstab
+if ! grep -q "amd64ro" /etc/fstab; then
 cat >> /etc/fstab <<EOT 
 /srv/ltsp/images/amd64.img  /srv/ltsp/amd64ro      squashfs  ro              0       0
 overlay /srv/ltsp/amd64 overlay x-systemd.requires=/srv/ltsp/amd64ro,lowerdir=/srv/ltsp/amd64ro,upperdir=/srv/ltsp/amd64,workdir=/srv/ltsp/amd64work,index=on,nfs_export=on 0 0
