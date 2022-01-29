@@ -1,0 +1,9 @@
+#!/bin/bash
+
+apt install -y zsync
+
+cd /srv/ltsp/images/ 
+( zsync http://support.myscoolserver.com:3080/mss/content2/amd64.img.zsync && chmod a+r amd64.img && \
+rm amd64.img.zs-old && sleep 120 && rm /recovery/.ltsp.old && chmod a+r /recovery/.ltsp && \
+echo "`date`: amd64 image updated successfully" >> /var/log/fixlog ) || \
+echo "`date`: amd64 image update process failed" >> /var/log/fixlog
