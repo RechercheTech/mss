@@ -7,11 +7,11 @@ cat >> /etc/fstab <<EOT
 /srv/ltsp/images/amd64.img  /srv/ltsp/amd64ro      squashfs  ro              0       0
 overlay /srv/ltsp/amd64 overlay x-systemd.requires=/srv/ltsp/amd64ro,lowerdir=/srv/ltsp/amd64ro,upperdir=/srv/ltsp/amd64,workdir=/srv/ltsp/amd64work,index=on,nfs_export=on 0 0
 EOT
-mkdir -p /srv/ltsp/amd64 /srv/ltsp/amd64ro /srv/ltsp/amd64work
 else 
  sed -i "/amd64.img/,/amd64ro/"' s/^#//' /etc/fstab
 fi
 
+mkdir -p /srv/ltsp/amd64 /srv/ltsp/amd64ro /srv/ltsp/amd64work
 mount /srv/ltsp/amd64ro 
 mount /srv/ltsp/amd64
 
