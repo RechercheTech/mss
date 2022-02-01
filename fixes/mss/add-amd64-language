@@ -17,9 +17,10 @@ mount /srv/ltsp/amd64
 
 cd /srv/ltsp/amd64 
 mount --bind /proc proc; mount --bind /tmp tmp; mount --bind /sys sys; mount --bind /dev dev; mount --bind /dev/pts dev/pts; 
-chroot .
+chroot . /bin/bash <<EOT
 apt install -y `check-language-support -l $newlang`
 exit
+EOT
 umount ./dev/pts ./proc ./sys ./dev ./tmp
 cd ..
 ltsp image amd64 && rm /srv/ltsp/images/amd64.img.old && umount /srv/ltsp/amd64ro && \
