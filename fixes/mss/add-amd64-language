@@ -14,10 +14,11 @@ fi
 mkdir -p /srv/ltsp/amd64 /srv/ltsp/amd64ro /srv/ltsp/amd64work
 mount /srv/ltsp/amd64ro 
 mount /srv/ltsp/amd64
-
+sleep 1
 cd /srv/ltsp/amd64 
 mount --bind /proc proc; mount --bind /tmp tmp; mount --bind /sys sys; mount --bind /dev dev; mount --bind /dev/pts dev/pts; 
 chroot . /bin/bash <<EOT
+apt -y update
 apt install -y `check-language-support -l $newlang`
 exit
 EOT
