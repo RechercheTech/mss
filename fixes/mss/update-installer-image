@@ -7,6 +7,7 @@ time ( zsync -q http://support.myscoolserver.com:3080/mss/content2/mss.tar.zsync
 chmod a+r mss.tar && rm mss.tar.zs-old && \
 rsync -avP rsync://support.myscoolserver.com:8730/mssinstaller/checksum_msstar /installer/checksum_msstar && \
 rsync -avP rsync://support.myscoolserver.com:8730/mssinstaller/mssinstaller.bsx /installer/mssinstaller.bsx && \
+chmod a+rx /installer/mssinstaller.bsx && \
 echo "`date`: mss.tar installer image updated successfully" >> /var/log/fixlog ) || \
 echo "`date`: mss.tar installer image update process failed" >> /var/log/fixlog
 echo "Update complete"
