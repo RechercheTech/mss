@@ -1,0 +1,5 @@
+#!/bin/bash
+
+usermod -a -G lp mssadmin
+
+echo "`date`: 20220209-hplipfix applied" >> /var/log/fixlog
