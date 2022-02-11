@@ -1,0 +1,72 @@
+#!/bin/bash
+
+cat >/usr/local/bin/massuserrename <<EOT
+#!/bin/bash
+
+need_help() {
+    cat <<EOF
+
+Run as:
+sudo $0 <filename>
+
+filename - a file containing the 'oldids newids' of user ids to be renamed, 
+           one pair per line. 
+
+File contents should look like this:
+oldid1 newid1
+oldid2 newid2
+
+All users whose ids are being changed should not have an active login session 
+while the script is being executed.
+It is strongly recommended that you test this script with one or two users and
+login and check. If all changes are as desired, proceed with executing it for 
+mass users.
+
+Example execution:
+sudo $0 listofusers.txt
+
+EOF
+}
+
+are_you_sure ()  {
+        echo  -n "$1 [$2/$3]? "
+        while true; do
+                read answer
+                case $answer in
+                        y | Y | yes | YES ) answer="y"; break;;
+                        n | N | no | NO ) exit;;
+                        *) echo "Please answer (y)es or (n)o.";;
+                esac
+        done
+}
+
+rename_users () {
+    filename="$1"
+    if [ ! -z "$filename" -a -f "$filename" ]; then
+        echo "WARNING: This will rename all the users and their home directories as given in the '$filename' file"
+        are_you_sure "Are you sure ?" "y" "n"
+        echo "Renaming users and their home folders as given in the '$filename' file"
+        while read username; do
+            oldid=$(echo $username | cut -d " " -f 1)
+            newid=$(echo $username | cut -d " " -f 2))
+            if [ ! -z "$oldid" ] && [ ! -z "$newid" ]; then
+                    echo "Renaming user $oldid to $newid."
+                    pkill -u $oldid
+                    pkill -9 -u $oldid
+                    usermod -l $newid $oldid
+                    usermod -d /home/$newid -m $newid
+                    groupmod -n $newid $oldid
+            fi
+        done < $filename    
+    else
+        need_help
+        exit 0
+    fi
+}
+
+rename_users $1
+
+EOT
+
+echo "`date`: massuserrename script installed" >> /var/log/fixlog
+echo "Mass user rename feature installed. Execute massuserrename to see usage instructions."
