@@ -1,6 +1,6 @@
 #!/bin/bash
 scriptname=/usr/local/bin/massuserrename
-cat >$scriptname <<EOT
+cat >$scriptname << "EOT"
 #!/bin/bash
 
 need_help() {
@@ -44,11 +44,11 @@ rename_users () {
     filename="$1"
     if [ ! -z "$filename" -a -f "$filename" ]; then
         echo "WARNING: This will rename all the users and their home directories as given in the '$filename' file"
-        are_you_sure "Are you sure ?" "y" "n"
+        are_you_sure "Are you sure" "y" "n"
         echo "Renaming users and their home folders as given in the '$filename' file"
         while read username; do
             oldid=$(echo $username | cut -d " " -f 1)
-            newid=$(echo $username | cut -d " " -f 2))
+            newid=$(echo $username | cut -d " " -f 2)
             if [ ! -z "$oldid" ] && [ ! -z "$newid" ]; then
                     echo "Renaming user $oldid to $newid."
                     pkill -u $oldid
