@@ -1,6 +1,6 @@
 #!/bin/bash
-
-cat >/usr/local/bin/massuserrename <<EOT
+scriptname=/usr/local/bin/massuserrename
+cat >$scriptname <<EOT
 #!/bin/bash
 
 need_help() {
@@ -67,6 +67,7 @@ rename_users () {
 rename_users $1
 
 EOT
+chmod ug+x $scriptname
 
 echo "`date`: massuserrename script installed" >> /var/log/fixlog
 echo "Mass user rename feature installed. Execute massuserrename to see usage instructions."
