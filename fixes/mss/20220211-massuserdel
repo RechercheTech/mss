@@ -9,7 +9,7 @@ need_help() {
 Run as:
 $0 <filename>
 
-filename - a file containing the ids of user accounts to be deleted, one per line
+filename - a file containing the ids of user accounts to be deleted, space separated or one per line
 
 Example: 
 $0 listofusers.txt
@@ -36,15 +36,10 @@ delete_users () {
             need_help
             exit 0
         fi
-        echo "This will delete all the users and their home directories given in the file - $filename"
+        echo "WARNING: This will delete all the users and their home directories given in the file - '$filename'"
         are_you_sure "Are you sure ?" "y" "n"
-        echo "Deleting users given in $filename file"
-        while read username; do
-                user=$(echo $username | cut -d " " -f 1)
-                if [ ! -z "$user" ]; then
-                        userdel -r $user
-                fi
-        done < $filename
+        echo "Deleting users given in the '$filename' file"
+        for user in $(cat $filename); do userdel -r $user; done
     fi
 }
 
