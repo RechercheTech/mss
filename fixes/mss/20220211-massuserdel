@@ -45,3 +45,6 @@ delete_users () {
 delete_users $1
 
 EOT
+
+echo "`date`: massuserdel script installed" >> /var/log/fixlog
+echo "Mass user deletion feature installed. Execute massuserdel to see usage instructions."
