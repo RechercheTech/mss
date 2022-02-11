@@ -1,0 +1,25 @@
+#!/bin/bash
+
+are_you_sure ()  {
+        echo  -n "$1 [$2/$3]? "
+        while true; do
+                read answer
+                case $answer in
+                        y | Y | yes | YES ) answer="y"; break;;
+                        n | N | no | NO ) exit;;
+                        *) echo "Please answer (y)es or (n)o.";;
+                esac
+        done
+}
+
+echo "WARNING: This will replace the factory restore snapshot with one created from your current system state."
+echo "         You should not do this step unless explicitly told to do so by MSS support team member in written."
+are_you_sure "Proceed ?" "y" "n"
+
+tempsnapshot=`date +%s`
+recovery.sh create $tempsnapshot
+borg delete /recovery/system::factory
+borg rename /recovery/system::$tempsnapshot factory
+
+echo "`date`: Factory snapshot updated" >> /var/log/fixlog
+echo "Factory snapshot updated."
