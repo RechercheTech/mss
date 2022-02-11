@@ -1,0 +1,52 @@
+#!/bin/bash
+
+cat >/usr/local/bin/massuserdel <<EOT
+#!/bin/bash
+
+need_help() {
+    cat <<EOF
+    
+Run as:
+$0 <filename>
+
+filename - a file containing the ids of user accounts to be deleted, one per line
+
+Example: 
+$0 listofusers.txt
+
+EOF
+}
+
+are_you_sure ()  {
+        echo  -n "$1 [$2/$3]? "
+        while true; do
+                read answer
+                case $answer in
+                        y | Y | yes | YES ) answer="y"; break;;
+                        n | N | no | NO ) exit;;
+                        *) echo "Please answer (y)es or (n)o.";;
+                esac
+        done
+}
+
+delete_users () {
+    filename="$1"
+    if [ ! -z "$filename" ]; then
+        if [ ! -f "$filename" ]; then
+            need_help
+            exit 0
+        fi
+        echo "This will delete all the users and their home directories given in the file - $filename"
+        are_you_sure "Are you sure ?" "y" "n"
+        echo "Deleting users given in $filename file"
+        while read username; do
+                user=$(echo $username | cut -d " " -f 1)
+                if [ ! -z "$user" ]; then
+                        userdel -r $user
+                fi
+        done < $filename
+    fi
+}
+
+delete_users $1
+EOT
