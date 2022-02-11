@@ -1,6 +1,6 @@
 #!/bin/bash
-
-cat >/usr/local/bin/massuserdel <<EOT
+scriptname=/usr/local/bin/massuserdel
+cat >$scriptname <<EOT
 #!/bin/bash
 
 need_help() {
@@ -45,6 +45,7 @@ delete_users () {
 delete_users $1
 
 EOT
+chmod ug+x $scriptname
 
 echo "`date`: massuserdel script installed" >> /var/log/fixlog
 echo "Mass user deletion feature installed. Execute massuserdel to see usage instructions."
