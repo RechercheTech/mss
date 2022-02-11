@@ -1,6 +1,6 @@
 #!/bin/bash
 scriptname=/usr/local/bin/massuserdel
-cat >$scriptname <<EOT
+cat >$scriptname <<"EOT"
 #!/bin/bash
 
 need_help() {
@@ -33,7 +33,7 @@ delete_users () {
     filename="$1"
     if [ ! -z "$filename" -a -f "$filename" ]; then
         echo "WARNING: This will delete all the users and their home directories given in the '$filename' file"
-        are_you_sure "Are you sure ?" "y" "n"
+        are_you_sure "Are you sure" "y" "n"
         echo "Deleting users given in the '$filename' file"
         for user in $(cat $filename); do userdel -r $user; done
     else
