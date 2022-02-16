@@ -14,7 +14,7 @@ are_you_sure ()  {
 
 echo "WARNING: This will replace the factory restore snapshot with one created from your current system state."
 echo "         You should not do this step unless explicitly told to do so by MSS support team member in written."
-are_you_sure "Proceed ?" "y" "n"
+are_you_sure "Proceed" "y" "n"
 
 tempsnapshot=`date +%s`
 recovery.sh create $tempsnapshot
