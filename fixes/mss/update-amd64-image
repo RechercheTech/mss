@@ -4,7 +4,7 @@ apt install -yqq zsync
 echo "Updating boot image for x86 clients"
 cd /srv/ltsp/images/ 
 time ( zsync -q http://support.myscoolserver.com:3080/mss/content2/amd64.img.zsync && chmod a+r amd64.img && \
-rm amd64.img.zs-old && sleep 180 && rm /recovery/.ltsp.old && chmod a+r /recovery/.ltsp && \
+rm amd64.img.zs-old && sleep 180 && rm /recovery/.ltsp.old && chmod a+r /recovery/.ltsp* && \
 rsync -avP rsync://support.myscoolserver.com:8730/home/mss/content2/checksum_amd64 /etc/mss/checksum_amd64 && \
 echo "`date`: amd64 image updated successfully" >> /var/log/fixlog && echo "`date`: amd64 image updated successfully" ) || \
-echo "`date`: amd64 image update process failed" >> /var/log/fixlog && echo "`date`: amd64 image updated failed. Contact MSS Support."
+( echo "`date`: amd64 image update process failed" >> /var/log/fixlog && echo "`date`: amd64 image updated failed. Contact MSS Support." )
