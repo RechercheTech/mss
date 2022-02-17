@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sed -i "s@rsync -aP /srv/ltsp/images/amd64.img /recovery/.ltsp@pv /srv/ltsp/images/amd64.img > /recovery/.ltsp@" /usr/bin/mssltsp
+sed -i "s@rsync -aP /srv/ltsp/images/mssraspi.img /recovery/.ltspmssraspi@pv /srv/ltsp/images/mssraspi.img > /recovery/.ltspmssraspi@" /usr/bin/mssltsp
+
+echo "`date`: mssltsp rsync2pv updated successfully" >> /var/log/fixlog 
+echo "`date`: mssltsp rsync2pv updated successfully"
