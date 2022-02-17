@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sed -i "s@GRUB_CMDLINE_LINUX=\"\"@GRUB_CMDLINE_LINUX=\"ipv6.disable=1\"@" /etc/default/grub 
+update-grub
+
+echo "`date`: IPv6 disabled successfully" >> /var/log/fixlog && echo "`date`: IPv6 disabled successfully"
