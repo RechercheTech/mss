@@ -9,4 +9,4 @@ rsync -avP rsync://support.myscoolserver.com:8730/mssinstaller/checksum_msstar /
 rsync -avP rsync://support.myscoolserver.com:8730/mssinstaller/mssinstaller.bsx /installer/mssinstaller.bsx && \
 chmod a+rx /installer/mssinstaller.bsx && \
 echo "`date`: mss.tar installer image updated successfully" >> /var/log/fixlog && echo "`date`: installer image updated successfully") || \
-echo "`date`: mss.tar installer image update process failed" >> /var/log/fixlog && echo "`date`: installer image update process failed. Contact MSS Support."
+( echo "`date`: mss.tar installer image update process failed" >> /var/log/fixlog && echo "`date`: installer image update process failed. Contact MSS Support." )
