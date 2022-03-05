@@ -1,0 +1,21 @@
+#!/bin/bash
+
+mssupdate https://repo.myscoolserver.com/fixes/ update-amd64-image
+
+ltsConf_file=/etc/ltsp/ltsp.conf
+cat > entry <<- EOF
+# Set INCLUDE value as one of the desired office suite - "openoffice" or "libreoffice"
+INCLUDE="libreoffice"
+[libreoffice]
+POST_INIT_RM_OPENOFFICE_MENU="cp /usr/bin/soffice.libre /usr/bin/soffice && rm -f /usr/share/applications/openoffice*.desktop"
+[openoffice]
+POST_INIT_RM_LIBREOFFICE_MENU="cp /usr/bin/soffice.open /usr/bin/soffice && rm -f /usr/share/applications/libreoffice*.desktop"
+EOF
+addition=$(sed 's@[/\&]@\\&@g;s/$/\\/' entry; echo .)
+addition=${addition%.}
+if ! grep -q "^\[libreoffice\]" "$ltsConf_file"; then
+  sed -i -e "/POST_INIT_USERS_ADMIN/a$addition" $ltsConf_file
+fi
+
+echo "`date`: office switch feature added" >> /var/log/fixlog 
+echo '`date`: office switch feature added. Set INCLUDE="openoffice" in /etc/ltsp/ltsp.conf if OpenOffice Suite is the desired office suite.' 
