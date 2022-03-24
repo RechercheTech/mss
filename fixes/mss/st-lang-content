@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Helps integrate spoken tutorial content packs in regional languages from the MSS hosted server.
+
+serverip="support.myscoolserver.com:3080"
+
+wget http://$serverip/mss/lang_map
+. lang_map
+rm lang_map
+
+CONTENT=st_${_lcode}
+mkdir /recovery/offlinewebarchives/
+cd /recovery/offlinewebarchives/
+wget -c http://$serverip/mss/st_lang_packs/$CONTENT.tar
+tar xf $CONTENT.tar -C /
+cd /var/www/html/mss/spoken-tutorial/
+wget -r -l1 -nd "http://$serverip/mss/st_lang_packs" -A "sedcmd_${_lcode}_*"
+
+# Replace options in js for all list*html files
+find . -name "list-videos-*.html" -exec sed -i -n -f sedcmd_${_lcode}_list1 {} \;
+# Fix language specific videos options section
+find . -name "list-videos-${_LANG}.html" -exec sed -i -n -f sedcmd_${_lcode}_list2 {} \;
+# Fix typo error in all html files (to be escalated)
+find . -name "*.html" -exec sed -i "s/traget/target/g" {} \;
+# Add language options in js for home.html
+sed -i -n -f sedcmd_${_lcode}_home1 /var/www/html/mss/spoken-tutorial/videos/home.html
+# Add language option in landing page options for home.html
+sed -i -n -f sedcmd_${_lcode}_home2 /var/www/html/mss/spoken-tutorial/videos/home.html
+
+chown -R mssadmin.users .
+find . -type d -exec chmod -R a+rx {} \;
+find . -type f -exec chmod -R a+r {} \;
+
+rm /var/www/html/mss/spoken-tutorial/sedcmd_${_lcode}_*
+rm /recovery/offlinewebarchives/$CONTENT.tar
+
+echo "`date`: $CONTENT integrated successfully" >> /var/log/fixlog && echo "`date`: $CONTENT integrated successfully"
