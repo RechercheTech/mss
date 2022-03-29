@@ -18,4 +18,4 @@ if ! grep -q "^\[libreoffice\]" "$ltsConf_file"; then
 fi
 
 echo "`date`: office switch feature added" >> /var/log/fixlog 
-echo '`date`: office switch feature added. Set INCLUDE="openoffice" in /etc/ltsp/ltsp.conf if OpenOffice Suite is the desired office suite.' 
+echo "`date`: office switch feature added. Set INCLUDE=\"openoffice\" in /etc/ltsp/ltsp.conf if OpenOffice Suite is the desired office suite."
