@@ -21,4 +21,6 @@ tar xf mss-xrdp.tar -C / && rm mss-xrdp.tar
 chown root.root /usr/local/share/xrdp/mss_logo_xrdp.bmp
 chmod 644 /usr/local/share/xrdp/mss_logo_xrdp.bmp
 
+sed -i "s/^bind.*/bind 127.0.0.1/g" /etc/redis/redis.conf
+
 echo "`date`: IPv6 disabled and xrdp updated successfully" >> /var/log/fixlog && echo "`date`: IPv6 disabled and xrdp updated successfully. A reboot shall be required to effect this change."
