@@ -1,0 +1,10 @@
+#!/bin/bash
+
+apt install -yqq zsync
+echo "Updating boot image for RPi clients"
+cd /srv/ltsp/images/ 
+time ( zsync http://support.myscoolserver.com:3080/mss/content2/mssraspi.img.zsync && chmod a+r mssraspi.img && \
+rm mssraspi.img.zs-old && sleep 150 && rm /recovery/.ltspmssraspi.old && chmod a+r /recovery/.ltspmssraspi && \
+rsync -avP rsync://support.myscoolserver.com:8730/home/mss/content2/checksum_mssraspi /etc/mss/checksum_mssraspi && \
+echo "`date`: mssraspi image updated successfully" >> /var/log/fixlog && echo "`date`: mssraspi image updated successfully" ) || \
+( echo "`date`: mssraspi image update process failed" >> /var/log/fixlog && echo "`date`: mssraspi image updated failed. Contact MSS Support." )
