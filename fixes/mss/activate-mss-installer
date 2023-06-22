@@ -25,22 +25,26 @@ echo "/installer   *(ro,root_squash,async,no_subtree_check)" > /etc/exports.d/lt
 exportfs -r
 
 ## for applying post mss setup customisations
-
+if [ ! -f /installer/postmsssetup ]; then
 cat >/installer/postmsssetup <<EOT
 #!/bin/bash
 mssupdate \$serverip syncwebcontent
 EOT
+fi
 
 ln -s /installer/postmsssetup /var/www/html/mss/postmsssetup
 
+if [ ! -f /installer/syncwebcontent ]; then
 cat >/installer/syncwebcontent <<EOT
 #!/bin/bash
 rsync -avP --exclude 'mongo.log.*' --exclude 'postmsssetup' --exclude 'syncwebcontent' rsync://\$serverip:/mssweb/ /var/www/html/mss/
 echo "Web content sync completed."
 EOT
+fi
 
 ln -s /installer/syncwebcontent /var/www/html/mss/syncwebcontent
 
+if [ ! -f /etc/rsyncd.conf ]; then
 # setup rsync daemon for speed
 cat >/etc/rsyncd.conf <<EOT
 gid = users
@@ -62,6 +66,7 @@ use slp = false
         path = /var/www/html/mss
         comment = MSS Web Content
 EOT
+fi
 
 # fetch latest installer
 rsync -avP rsync://support.myscoolserver.com:8730/mssinstaller/mssinstaller.bsx /installer/mssinstaller.bsx
