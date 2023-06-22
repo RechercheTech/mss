@@ -31,7 +31,7 @@ cat >/installer/postmsssetup <<EOT
 mssupdate \$serverip syncwebcontent
 EOT
 
-ln -s /installer/postmsssetup /var/www/html/postmsssetup
+ln -s /installer/postmsssetup /var/www/html/mss/postmsssetup
 
 cat >/installer/syncwebcontent <<EOT
 #!/bin/bash
@@ -39,7 +39,7 @@ rsync -avP --exclude 'mongo.log.*' --exclude 'postmsssetup' --exclude 'syncwebco
 echo "Web content sync completed."
 EOT
 
-ln -s /installer/syncwebcontent /var/www/html/syncwebcontent
+ln -s /installer/syncwebcontent /var/www/html/mss/syncwebcontent
 
 # setup rsync daemon for speed
 cat >/etc/rsyncd.conf <<EOT
