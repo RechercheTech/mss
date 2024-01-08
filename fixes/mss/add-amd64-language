@@ -25,7 +25,7 @@ EOT
 umount ./dev/pts ./proc ./sys ./dev ./tmp
 cd ..
 ltsp image amd64 && rm /srv/ltsp/images/amd64.img.old && umount /srv/ltsp/amd64ro && \
-umount /srv/ltsp/amd64 && rm -rf /srv/ltsp/amd64ro /srv/ltsp/amd64 /srv/ltsp/amd64work && \
+umount -l /srv/ltsp/amd64 && rm -rf /srv/ltsp/amd64ro /srv/ltsp/amd64 /srv/ltsp/amd64work && \
 sleep 120 # allows backup to /recovery/.ltsp via incron
 
 sed -i "/amd64.img/,/amd64ro/"' s/^/#/' /etc/fstab
